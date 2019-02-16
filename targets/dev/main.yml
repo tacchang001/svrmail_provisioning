@@ -5,7 +5,7 @@
   vars_files:
     - vars/site.yml
   roles:
+    - { role: base, become: yes }
     - { role: users, become: yes }
     - { role: selfsigned_cert, become: no }
-#    - { role: base, become: yes }
-#    - { role: mail, become: yes }
+    - { role: mailserver, become: yes }
