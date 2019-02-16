@@ -1,5 +1,22 @@
-- name: 基本パッケージのインストール
-  apt: name={{item}} state=installed
-  with_items:
-    - "{{ base_packages }}"
+- name: Update the /etc/ssh/sshd_config file  (UseDNS)
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^UseDNS"
+    line: "UseDNS no"
+    insertafter: EOF
+    state: present
 
+- name: Update the /etc/ssh/sshd_config file  (GSSAPIAuthentication)
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^GSSAPIAuthentication"
+    line: "GSSAPIAuthentication no"
+    insertafter: EOF
+    state: present
+  register: ssh_config
+
+- name: Restart ssh
+  service:
+    name: ssh
+    state: restarted
+  when: ssh_config.changed

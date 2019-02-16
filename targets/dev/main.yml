@@ -6,6 +6,6 @@
     - vars/site.yml
   roles:
     - { role: users, become: yes }
-#    - { role: base, become: yes }
+    - { role: base, become: yes }
 #    - { role: mail, become: yes }
 
