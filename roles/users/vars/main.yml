@@ -1,0 +1,3 @@
+users:
+  - { name: 'user001', group: 'users', password: "{{ 'Password11'|password_hash('sha512') }}", update_password: 'on_create' }
+  - { name: 'user002', group: 'users', password: "{{ 'Password11'|password_hash('sha512') }}", update_password: 'on_create' }

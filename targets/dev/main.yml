@@ -1,0 +1,11 @@
+#
+- hosts: test-server
+  remote_user: "{{ user_to_work }}"
+  become_method: sudo
+  vars_files:
+    - vars/site.yml
+  roles:
+    - { role: users, become: yes }
+#    - { role: base, become: yes }
+#    - { role: mail, become: yes }
+

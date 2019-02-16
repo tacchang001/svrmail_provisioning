@@ -1,0 +1,6 @@
+
+[test-server]
+192.168.56.20 ansible_python_interpreter=/usr/bin/python3
+
+### ターゲットにpythonが無い場合（python3はある）
+# http://htnosm.hatenablog.com/entry/2017/07/30/090000

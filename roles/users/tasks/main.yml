@@ -1,0 +1,12 @@
+# https://qiita.com/sunack/items/22ca52254b4fbf4caac4
+- name: 基本パッケージのインストール
+  user:
+    name: "{{ item.name }}"
+    createhome: yes
+    password: "{{ item.password }}"
+    groups:  "{{ item.group }}"
+    update_password: "{{ item.update_password }}"
+    shell: /bin/bash
+  with_items:
+    - "{{ users }}"
+  when: users #usersが1件以上の場合のみ実行
