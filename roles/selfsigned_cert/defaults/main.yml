@@ -1,0 +1,7 @@
+selfsigned_cert:
+  cert:
+    path: /etc/ssl/crt/ssl.crt
+  privatekey:
+    path: /etc/ssl/private/ssl.pem
+  csr:
+    path: /etc/ssl/csr/ssl.csr

@@ -112,3 +112,6 @@ venv.bak/
 # Ansible-galaxy
 roles/thefinn93.letsencrypt/
 roles/jaywink.letsencrypt/
+
+# provision temporary files
+roles/selfsigned_cert/files/ssl.*
