@@ -1,19 +1,10 @@
 - name: 必要なパッケージのインストール
-  apt: name={{item}} state=installed
+  yum: name={{item}} state=installed
   with_items:
-    - "{{ apt_packages }}"
+    - "{{ install_packages }}"
 
 - name: main.cfファイルを新規
   shell: creates="{{ /etc/postfix/main.cf }}" cp /usr/share/postfix/main.cf.dist /etc/postfix/main.cf
 
 # TODO: Server WorldをAnsible化する
 # https://www.server-world.info/query?os=Ubuntu_18.04&p=mail&f=1
-
-- name: 78行目：コメント解除
-  lineinfile:
-    dest: /etc/ssh/sshd_config
-    regexp: "^GSSAPIAuthentication"
-    line: "GSSAPIAuthentication no"
-    insertafter: EOF
-    state: present
-  notify: restart postfix

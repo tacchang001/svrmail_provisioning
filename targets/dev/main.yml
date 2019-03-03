@@ -7,5 +7,5 @@
   roles:
     - { role: base, become: yes }
     - { role: users, become: yes }
-    - { role: selfsigned_cert, become: no }
-    - { role: mailserver, become: yes }
+#    - { role: selfsigned_cert, become: no }
+#    - { role: mailserver, become: yes }

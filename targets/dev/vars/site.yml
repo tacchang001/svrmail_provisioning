@@ -1,4 +1,11 @@
+###
+### base
+###
+
 # Account to work
 user_to_work: devel
 
-
+# domein name
+base_domain_name: tacchang.xyz
+# host name
+base_hostname: srv1.tacchang.xyz

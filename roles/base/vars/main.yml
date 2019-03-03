@@ -1,0 +1,7 @@
+# base vars
+
+install_packages:
+  - nfs-utils
+  - bind-utils
+  - net-tools
+  - wget
