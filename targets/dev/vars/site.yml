@@ -9,3 +9,10 @@ user_to_work: devel
 base_domain_name: tacchang.xyz
 # host name
 base_hostname: srv1.tacchang.xyz
+
+###
+### letsencrypt
+###
+letsencrypt_staging: yes
+letsencrypt_renew: yes
+letsencrypt_email: "wowtacchang+dti@gmail.com"

@@ -21,13 +21,17 @@
     state: restarted
   when: ssh_config.changed
 
-- name: Change hostname
-  hostname: name={{ base_hostname }}
+# DTI VPS(ServerMan)ではhostnamectl set-hostnameができない
+#- name: Change hostname
+#  hostname: name={{ base_hostname }}
 
 - name: 必要なパッケージのインストール
-  yum: name={{item}} state=installed
-  with_items:
-    - "{{ install_packages }}"
+#  yum: name={{item}} state=installed
+#  with_items:
+#    - "{{ install_packages }}"
+  yum:
+    name: "{{ install_packages }}"
+    state: present
 
 - name: Disable IPv6
 #  shell: echo -e "net.ipv6.conf.all.disable_ipv6 = 1\nnet.ipv6.conf.default.disable_ipv6 = 1" > /etc/sysctl.d/disable_ipv6.conf

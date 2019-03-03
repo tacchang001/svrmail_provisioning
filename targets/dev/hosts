@@ -1,6 +1,7 @@
 
 [test-server]
-dummy.tacchang.xyz
+# dummy.tacchang.xyz
+tacchang.xyz
 # 192.168.56.20
 # 192.168.56.20 ansible_python_interpreter=/usr/bin/python3
 
