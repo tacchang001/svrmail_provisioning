@@ -1,0 +1,50 @@
+# https://qiita.com/dz_/items/a0da2be4d12ebecfcdf4
+
+- name: Generate OpenSSL private key
+  openssl_privatekey:
+    path: "{{ role_path }}/files/{{ selfsigned_cert.privatekey.path | basename }}"
+  delegate_to: localhost
+  run_once: yes
+
+- name: Generate OpenSSL CSR
+  openssl_csr:
+    path: "{{ role_path }}/files/{{ selfsigned_cert.csr.path | basename }}"
+    privatekey_path: "{{ role_path }}/files/{{ selfsigned_cert.privatekey.path | basename }}"
+    common_name: Server
+  delegate_to: localhost
+  run_once: yes
+
+- name: Generate OpenSSL certificate
+  openssl_certificate:
+    path: "{{ role_path }}/files/{{ selfsigned_cert.cert.path | basename }}"
+    privatekey_path: "{{ role_path }}/files/{{ selfsigned_cert.privatekey.path |basename }}"
+    csr_path: "{{ role_path }}/files/{{ selfsigned_cert.csr.path | basename }}"
+    provider: selfsigned
+  delegate_to: localhost
+  run_once: yes
+
+- name: Create directories for OpenSSL certificate
+  become: yes
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+    - "{{ selfsigned_cert.privatekey.path | dirname }}"
+    - "{{ selfsigned_cert.cert.path | dirname }}"
+
+- name: Copy these certificate and private key
+  become: yes
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - src: "{{ selfsigned_cert.privatekey.path | basename }}"
+      dest: "{{ selfsigned_cert.privatekey.path }}"
+    - src: "{{ selfsigned_cert.cert.path | basename }}"
+      dest: "{{ selfsigned_cert.cert.path }}"

@@ -1,3 +1,10 @@
+
+- name: 必要なパッケージのインストール
+  yum:
+    name: "{{ install_packages }}"
+    enablerepo: epel
+    state: present
+
 - name: install certbot
   become: yes
   get_url:

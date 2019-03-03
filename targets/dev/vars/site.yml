@@ -16,3 +16,8 @@ base_hostname: srv1.tacchang.xyz
 letsencrypt_staging: yes
 letsencrypt_renew: yes
 letsencrypt_email: "wowtacchang+dti@gmail.com"
+
+###
+### letsencrypt
+###
+postfix_mynetworks: 36.55.229.156/32

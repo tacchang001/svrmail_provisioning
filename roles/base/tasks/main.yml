@@ -26,9 +26,6 @@
 #  hostname: name={{ base_hostname }}
 
 - name: 必要なパッケージのインストール
-#  yum: name={{item}} state=installed
-#  with_items:
-#    - "{{ install_packages }}"
   yum:
     name: "{{ install_packages }}"
     state: present

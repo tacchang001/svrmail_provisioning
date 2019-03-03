@@ -1,6 +1,7 @@
 # base vars
 
 install_packages:
+  - epel-release
   - nfs-utils
   - bind-utils
   - net-tools

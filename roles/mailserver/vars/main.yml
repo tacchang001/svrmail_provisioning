@@ -1,8 +1,14 @@
-apt_packages:
+install_packages:
   - postfix
-  - sasl2-bin
-  - dovecot-core
-  - dovecot-pop3d
-  - dovecot-imapd
+  - dovecot
 
-main.cf: /etc/postfix/main.cf
+main_cf: /etc/postfix/main.cf
+
+dovecot_conf: /etc/dovecot/dovecot.conf
+
+auth_conf: /etc/dovecot/conf.d/10-auth.conf
+
+mail_conf: /etc/dovecot/conf.d/10-mail.conf
+
+master_conf: /etc/dovecot/conf.d/10-master.conf
+

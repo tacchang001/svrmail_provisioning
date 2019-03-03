@@ -1,0 +1,5 @@
+# letsencrypt
+
+install_packages:
+  - python-pip
+  - certbot

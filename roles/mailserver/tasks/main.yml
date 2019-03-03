@@ -1,10 +1,91 @@
 - name: 必要なパッケージのインストール
-  yum: name={{item}} state=installed
-  with_items:
-    - "{{ install_packages }}"
-
-- name: main.cfファイルを新規
-  shell: creates="{{ /etc/postfix/main.cf }}" cp /usr/share/postfix/main.cf.dist /etc/postfix/main.cf
+  yum:
+    name: "{{ install_packages }}"
+    state: present
 
 # TODO: Server WorldをAnsible化する
 # https://www.server-world.info/query?os=Ubuntu_18.04&p=mail&f=1
+
+- name: Postfix 設定変更
+  lineinfile:
+    dest: "{{ main_cf }}"
+    backrefs: yes
+    regexp: '{{ item.regexp }}'
+    line: '{{ item.line }}'
+  with_items:
+    - regexp: "^#myhostname = host.domain.tld"
+      line: "myhostname = {{ base_hostname }}"
+    - regexp: "^#mydomain = domain.tld"
+      line: "myhostname = {{ base_domain_name }}"
+    - regexp: "^#myorigin = $mydomain"
+      line: "myorigin = $mydomain"
+    - regexp: "^#inet_interfaces = all"
+      line: "inet_interfaces = all"
+    - regexp: "^inet_protocols = .*"
+      line: "inet_protocols = ipv4"
+    - regexp: "^mydestination = $myhostname, localhost.$mydomain, localhost"
+      line: "mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain"
+    - regexp: "^#mynetworks = hash:/etc/postfix/network_table"
+      line: "mynetworks = 127.0.0.0/8, {{ postfix_mynetworks }}"
+    - regexp: "^#home_mailbox = Maildir/"
+      line: "home_mailbox = Maildir/"
+    - regexp: "^#smtpd_banner = $myhostname ESMTP $mail_name ($mail_version)"
+      line: "smtpd_banner = $myhostname ESMTP"
+
+- name: Postfix 最後に追加
+  blockinfile:
+    dest: "{{ main_cf }}"
+    insertafter: EOF
+    content: |
+      # 送受信メールサイズを10Mに制限
+      message_size_limit = 10485760
+      # メールボックスサイズを1Gに制限
+      mailbox_size_limit = 1073741824
+      # 以下SMTP-Auth用
+      smtpd_sasl_type = dovecot
+      smtpd_sasl_path = private/auth
+      smtpd_sasl_auth_enable = yes
+      smtpd_sasl_security_options = noanonymous
+      smtpd_sasl_local_domain = $myhostname
+      smtpd_recipient_restrictions = permit_mynetworks, permit_auth_destination, permit_sasl_authenticated, reject
+
+- name: Dovecot dovecot.conf 設定変更
+  lineinfile:
+    dest: "{{ dovecot_conf }}"
+    backrefs: yes
+    regexp: '{{ item.regexp }}'
+    line: '{{ item.line }}'
+  with_items:
+    - regexp: "^#listen = .*"
+      line: "listen = *"
+
+- name: Dovecot 設定変更
+  lineinfile:
+    dest: "{{ auth_conf }}"
+    backrefs: yes
+    regexp: '{{ item.regexp }}'
+    line: '{{ item.line }}'
+  with_items:
+    - regexp: "^#disable_plaintext_auth = .*"
+      line: "disable_plaintext_auth = no"
+
+- name: Dovecot 10-mail.conf 設定変更
+  lineinfile:
+    dest: "{{ mail_conf }}"
+    backrefs: yes
+    regexp: '{{ item.regexp }}'
+    line: '{{ item.line }}'
+  with_items:
+    - regexp: "^#mail_location ="
+      line: "mail_location = maildir:~/Maildir"
+
+- name: Dovecot 10-master.conf 設定変更
+  blockinfile:
+    dest: "{{ master_conf }}"
+    insertafter: "# Postfix smtp-auth"
+    content: |
+      unix_listener /var/spool/postfix/private/auth {
+          mode = 0666
+          user = postfix
+          group = postfix
+      }
