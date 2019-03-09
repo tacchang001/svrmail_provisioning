@@ -6,9 +6,20 @@
 user_to_work: devel
 
 # domein name
-base_domain_name: tacchang.xyz
+my_domain_name: tacchang.xyz
 # host name
-base_hostname: srv1.tacchang.xyz
+my_mailserver_hostname: mail.tacchang.xyz
+
+###
+### selfsigned_cert
+###
+selfsigned_cert:
+  cert:
+    path: /etc/pki/tls/certs/ssl.crt
+  privatekey:
+    path: /etc/pki/tls/certs/ssl.pem
+  csr:
+    path: /etc/pki/tls/certs/ssl.csr
 
 ###
 ### letsencrypt
@@ -18,6 +29,6 @@ letsencrypt_renew: yes
 letsencrypt_email: "wowtacchang+dti@gmail.com"
 
 ###
-### letsencrypt
+### postfix
 ###
-postfix_mynetworks: 36.55.229.156/32
+postfix_mynetworks: 36.55.229.0/24

@@ -1,0 +1,11 @@
+- name: restart postfix
+  service: name=postfix state=restarted
+
+- name: restart dovecot
+  service: name=dovecot state=restarted
+
+- name: save iptables
+  command: iptables-save
+
+#- name: reload iptables
+#  service: name=iptables state=restarted

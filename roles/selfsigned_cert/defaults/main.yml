@@ -1,7 +1,0 @@
-selfsigned_cert:
-  cert:
-    path: /etc/pki/tls/certs/ssl.crt
-  privatekey:
-    path: /etc/pki/tls/certs/ssl.pem
-  csr:
-    path: /etc/pki/tls/certs/ssl.csr

@@ -6,3 +6,4 @@ install_packages:
   - bind-utils
   - net-tools
   - wget
+  - file

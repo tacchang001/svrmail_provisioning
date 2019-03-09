@@ -23,7 +23,7 @@
 
 # DTI VPS(ServerMan)ではhostnamectl set-hostnameができない
 #- name: Change hostname
-#  hostname: name={{ base_hostname }}
+#  hostname: name={{ my_mailserver_hostname }}
 
 - name: 必要なパッケージのインストール
   yum:

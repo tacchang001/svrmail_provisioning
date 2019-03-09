@@ -9,3 +9,4 @@
     - { role: users, become: yes }
     - { role: selfsigned_cert, become: yes }
     - { role: mailserver, become: yes }
+    - { role: firewall, become: yes }

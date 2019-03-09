@@ -4,6 +4,8 @@ install_packages:
 
 main_cf: /etc/postfix/main.cf
 
+master_cf: /etc/postfix/master.cf
+
 dovecot_conf: /etc/dovecot/dovecot.conf
 
 auth_conf: /etc/dovecot/conf.d/10-auth.conf
@@ -12,3 +14,4 @@ mail_conf: /etc/dovecot/conf.d/10-mail.conf
 
 master_conf: /etc/dovecot/conf.d/10-master.conf
 
+ssl_conf: /etc/dovecot/conf.d/10-ssl.conf

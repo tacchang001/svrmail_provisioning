@@ -17,7 +17,7 @@
   shell: "{{ letsencrypt_path }}/certbot-auto certonly --standalone --noninteractive --text --agree-tos --email {{ letsencrypt_email }} -d {{ base_domain_name }} {%- if letsencrypt_staging %} --staging{% endif -%}"
 
   args:
-    creates: /etc/letsencrypt/live/{{ base_domain_name }}
+    creates: /etc/letsencrypt/live/{{ my_domain_name }}
   ignore_errors: yes
 
 - name: set up automatic renewal

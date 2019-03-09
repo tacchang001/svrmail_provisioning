@@ -1,0 +1,50 @@
+- name: 必要なパッケージのインストール
+  yum:
+    name: "{{ install_packages }}"
+    state: present
+
+# https://sky-joker.tech/2018/02/11/ansible%E3%81%AEiptables%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%81%9F/
+#- name: iptables flush
+#  iptables:
+#    flush: true
+
+- name: iptables INPUT policy.
+  iptables:
+    chain: INPUT
+    policy: ACCEPT
+  notify:
+    - save iptables
+
+- name: iptables INPUT rule.
+  iptables:
+    comment: "{{ item.comment }}"
+    chain: INPUT
+    protocol: "{{ item.protocol }}"
+    destination_port: "{{ item.destination_port }}"
+    jump: ACCEPT
+  with_items:
+    - "{{ fw_chain_input }}"
+  notify:
+    - save iptables
+#    - reload iptables
+
+- name: iptables INPUT policy.
+  iptables:
+    chain: INPUT
+    policy: DROP
+  notify:
+    - save iptables
+
+- name: iptables OUTPUT policy.
+  iptables:
+    chain: OUTPUT
+    policy: ACCEPT
+  notify:
+    - save iptables
+
+- name: iptables FORWARD policy.
+  iptables:
+    chain: FORWARD
+    policy: DROP
+  notify:
+    - save iptables
