@@ -1,0 +1,12 @@
+うるさい不正アクセスをBANする。
+
+とりあえずインストール
+https://www.netassist.ne.jp/blog/?p=1310
+https://www.uramiraikan.net/Works/entry-1963.html
+
+SASLをBAN
+https://colo-ri.jp/develop/2016/02/fail2ban.html
+https://www.flagsystem.co.jp/news/archives/135
+
+これは効いているかわからない
+https://onoredekaiketsu.com/fail2ban-block-unauthorized-access/

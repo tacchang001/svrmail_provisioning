@@ -11,3 +11,6 @@ fw_chain_input:
   - { protocol: 'tcp', destination_port: '80',   comment: 'http' }
   - { protocol: 'tcp', destination_port: '443',  comment: 'https' }
   - { protocol: 'tcp', destination_port: '8080', comment: 'http' }
+OUTPUTに53（DNS）を追加しないと名前引きできない
+  - { protocol: 'tcp', destination_port: '53', comment: 'dns' }
+  - { protocol: 'udp', destination_port: '53', comment: 'dns' }
